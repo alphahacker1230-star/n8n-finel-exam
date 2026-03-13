@@ -1,0 +1,1585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>n8n Certification Exam</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --color-primary: #7F77DD;
+      --color-primary-light: #9B94E8;
+      --color-primary-dark: #5A52B5;
+      --color-secondary: #1D9E75;
+      --color-success: #22C55E;
+      --color-success-dark: #16A34A;
+      --color-error: #EF4444;
+      --color-error-dark: #DC2626;
+      --color-warning: #F59E0B;
+      --color-bg-dark: #0a0a0c;
+      --color-card-bg: rgba(255, 255, 255, 0.03);
+      --color-text-main: #ffffff;
+      --color-text-mute: #a0a0b0;
+      --border-radius: 16px;
+      --glass-border: 1px solid rgba(255, 255, 255, 0.08);
+      --shadow-premium: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+      --shadow-glow: 0 0 40px rgba(127, 119, 221, 0.3);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      background-color: var(--color-bg-dark);
+      color: var(--color-text-main);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow-x: hidden;
+      background-image: 
+        radial-gradient(ellipse at 20% 20%, rgba(127, 119, 221, 0.1) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 80%, rgba(29, 158, 117, 0.1) 0%, transparent 50%);
+    }
+
+    /* Animated Background Particles */
+    .particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .particle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: var(--color-primary);
+      border-radius: 50%;
+      opacity: 0.3;
+      animation: particleFloat 15s infinite ease-in-out;
+    }
+
+    @keyframes particleFloat {
+      0%, 100% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+      10% { opacity: 0.3; }
+      90% { opacity: 0.3; }
+      100% { transform: translateY(-100vh) rotate(720deg); opacity: 0; }
+    }
+
+    #exam-wrapper {
+      width: 100%;
+      max-width: 700px;
+      min-height: 580px;
+      padding: 2.5rem;
+      background: linear-gradient(135deg, rgba(20, 20, 25, 0.95), rgba(15, 15, 20, 0.98));
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(127, 119, 221, 0.2);
+      border-radius: 28px;
+      box-shadow: var(--shadow-premium), var(--shadow-glow);
+      position: relative;
+      z-index: 10;
+      margin: 20px;
+      overflow: hidden;
+    }
+
+    #exam-wrapper::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--color-primary), var(--color-secondary), var(--color-primary));
+      background-size: 200% 100%;
+      animation: gradientMove 3s linear infinite;
+    }
+
+    @keyframes gradientMove {
+      0% { background-position: 0% 0%; }
+      100% { background-position: 200% 0%; }
+    }
+
+    /* Background Glow Effects */
+    .bg-glow {
+      position: fixed;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      filter: blur(80px);
+      z-index: 1;
+      pointer-events: none;
+      animation: glowPulse 4s ease-in-out infinite alternate;
+    }
+
+    .glow-1 {
+      top: -200px;
+      left: -200px;
+      background: radial-gradient(circle, rgba(127, 119, 221, 0.2) 0%, transparent 70%);
+    }
+
+    .glow-2 {
+      bottom: -200px;
+      right: -200px;
+      background: radial-gradient(circle, rgba(29, 158, 117, 0.2) 0%, transparent 70%);
+    }
+
+    @keyframes glowPulse {
+      0% { transform: scale(1); opacity: 0.5; }
+      100% { transform: scale(1.2); opacity: 0.8; }
+    }
+
+    /* Intro Screen */
+    .intro-screen {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .logo-circle {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 2rem;
+      box-shadow: 0 0 40px rgba(127, 119, 221, 0.5);
+      animation: float 3s ease-in-out infinite, pulse 2s ease-in-out infinite;
+      position: relative;
+    }
+
+    .logo-circle::after {
+      content: '';
+      position: absolute;
+      inset: -4px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+      z-index: -1;
+      filter: blur(15px);
+      opacity: 0.5;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-15px); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 40px rgba(127, 119, 221, 0.5); }
+      50% { box-shadow: 0 0 60px rgba(127, 119, 221, 0.8); }
+    }
+
+    .logo-text {
+      color: white;
+      font-size: 36px;
+      font-weight: 700;
+      letter-spacing: -1px;
+    }
+
+    .intro-title {
+      font-size: 36px;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+      background: linear-gradient(135deg, #fff, #a0a0b0);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .intro-sub {
+      font-size: 16px;
+      color: var(--color-text-mute);
+      margin-bottom: 2.5rem;
+      line-height: 1.7;
+      max-width: 420px;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin-bottom: 2.5rem;
+      width: 100%;
+    }
+
+    .info-chip {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 1.2rem;
+      text-align: center;
+      font-size: 14px;
+      color: var(--color-text-mute);
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .info-chip::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .info-chip:hover::before {
+      left: 100%;
+    }
+
+    .info-chip:hover {
+      transform: translateY(-5px) scale(1.02);
+      background: rgba(127, 119, 221, 0.1);
+      border-color: var(--color-primary);
+      box-shadow: 0 10px 30px rgba(127, 119, 221, 0.2);
+    }
+
+    .info-chip strong {
+      display: block;
+      font-size: 22px;
+      color: var(--color-text-main);
+      margin-bottom: 6px;
+      font-weight: 600;
+    }
+
+    /* Animated Buttons */
+    .btn-primary {
+      background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+      color: white;
+      border: none;
+      border-radius: 16px;
+      padding: 1.1rem 3.5rem;
+      font-size: 18px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 4px 20px rgba(127, 119, 221, 0.4);
+      position: relative;
+      overflow: hidden;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transition: left 0.6s ease;
+    }
+
+    .btn-primary:hover::before {
+      left: 100%;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 10px 40px rgba(127, 119, 221, 0.6);
+    }
+
+    .btn-primary:active {
+      transform: scale(0.95);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--color-text-mute);
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      border-radius: 14px;
+      padding: 0.9rem 2rem;
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--color-primary);
+      color: var(--color-primary);
+      background: rgba(127, 119, 221, 0.1);
+      transform: translateY(-2px);
+    }
+
+    .btn-next {
+      background: linear-gradient(135deg, var(--color-secondary), #16A34A);
+      color: white;
+      border: none;
+      border-radius: 14px;
+      padding: 1rem 2.5rem;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 4px 20px rgba(29, 158, 117, 0.4);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-next::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .btn-next:hover::before {
+      left: 100%;
+    }
+
+    .btn-next:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 30px rgba(29, 158, 117, 0.5);
+    }
+
+    /* Loading Screen */
+    .loading-screen {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 400px;
+      animation: fadeIn 0.5s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .loader-container {
+      position: relative;
+      width: 120px;
+      height: 120px;
+      margin-bottom: 2rem;
+    }
+
+    .loader-ring {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border: 4px solid transparent;
+      border-radius: 50%;
+    }
+
+    .loader-ring:nth-child(1) {
+      border-top-color: var(--color-primary);
+      animation: spin 1.5s linear infinite;
+    }
+
+    .loader-ring:nth-child(2) {
+      border-right-color: var(--color-secondary);
+      animation: spin 2s linear infinite reverse;
+    }
+
+    .loader-ring:nth-child(3) {
+      width: 80%;
+      height: 80%;
+      top: 10%;
+      left: 10%;
+      border-bottom-color: var(--color-primary-light);
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .loader-center {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+      border-radius: 50%;
+      animation: pulse 1s ease-in-out infinite;
+    }
+
+    .loading-text {
+      font-size: 18px;
+      color: var(--color-text-main);
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
+
+    .loading-sub {
+      font-size: 14px;
+      color: var(--color-text-mute);
+    }
+
+    .loading-dots {
+      display: inline-flex;
+      gap: 4px;
+    }
+
+    .loading-dots span {
+      width: 6px;
+      height: 6px;
+      background: var(--color-primary);
+      border-radius: 50%;
+      animation: dotBounce 1.4s ease-in-out infinite;
+    }
+
+    .loading-dots span:nth-child(2) { animation-delay: 0.2s; }
+    .loading-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+    @keyframes dotBounce {
+      0%, 80%, 100% { transform: scale(0.6); opacity: 0.5; }
+      40% { transform: scale(1); opacity: 1; }
+    }
+
+    /* Timer Transition Overlay */
+    #timerOverlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--color-bg-dark);
+      border-radius: 28px;
+      z-index: 100;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.5s ease;
+    }
+
+    #timerOverlay.green-phase {
+      background: linear-gradient(135deg, rgba(34, 197, 94, 0.2), rgba(22, 163, 74, 0.3));
+    }
+
+    #timerOverlay.red-phase {
+      background: linear-gradient(135deg, rgba(239, 68, 68, 0.2), rgba(220, 38, 38, 0.3));
+    }
+
+    .timer-circle {
+      width: 160px;
+      height: 160px;
+      position: relative;
+      margin-bottom: 2rem;
+    }
+
+    .timer-svg {
+      width: 100%;
+      height: 100%;
+      transform: rotate(-90deg);
+    }
+
+    .timer-bg {
+      fill: none;
+      stroke: rgba(255, 255, 255, 0.1);
+      stroke-width: 8;
+    }
+
+    .timer-progress {
+      fill: none;
+      stroke: var(--color-success);
+      stroke-width: 8;
+      stroke-linecap: round;
+      stroke-dasharray: 440;
+      stroke-dashoffset: 0;
+      transition: stroke-dashoffset 1s linear, stroke 0.5s ease;
+    }
+
+    .timer-progress.warning {
+      stroke: var(--color-warning);
+    }
+
+    .timer-progress.danger {
+      stroke: var(--color-error);
+    }
+
+    .timer-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 48px;
+      font-weight: 700;
+      color: var(--color-text-main);
+    }
+
+    .timer-label {
+      font-size: 16px;
+      color: var(--color-text-mute);
+      margin-bottom: 1rem;
+    }
+
+    .timer-status {
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--color-success);
+      transition: color 0.5s ease;
+    }
+
+    .timer-status.warning {
+      color: var(--color-warning);
+    }
+
+    .timer-status.danger {
+      color: var(--color-error);
+      animation: shake 0.5s ease-in-out infinite;
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      75% { transform: translateX(5px); }
+    }
+
+    /* Question Screen */
+    .question-screen {
+      display: none;
+      animation: slideIn 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(30px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    .progress-container {
+      margin-bottom: 2rem;
+    }
+
+    .progress-bar-wrap {
+      height: 10px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 10px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+      transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+    }
+
+    .progress-bar-fill::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      animation: shimmer 2s infinite;
+    }
+
+    @keyframes shimmer {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+
+    .progress-text {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 0.5rem;
+      font-size: 13px;
+      color: var(--color-text-mute);
+    }
+
+    .q-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .q-counter {
+      font-size: 14px;
+      color: var(--color-text-mute);
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .q-counter-icon {
+      width: 24px;
+      height: 24px;
+      background: rgba(127, 119, 221, 0.2);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+    }
+
+    .q-marks {
+      background: linear-gradient(135deg, rgba(127, 119, 221, 0.2), rgba(127, 119, 221, 0.1));
+      color: var(--color-primary-light);
+      padding: 8px 16px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 600;
+      border: 1px solid rgba(127, 119, 221, 0.3);
+    }
+
+    .category-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      background: rgba(29, 158, 117, 0.1);
+      border: 1px solid rgba(29, 158, 117, 0.3);
+      border-radius: 20px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--color-secondary);
+      margin-bottom: 1.5rem;
+    }
+
+    .category-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--color-secondary);
+      border-radius: 50%;
+    }
+
+    .q-text {
+      font-size: 22px;
+      font-weight: 500;
+      line-height: 1.6;
+      margin-bottom: 2rem;
+      color: var(--color-text-main);
+    }
+
+    .options-grid {
+      display: grid;
+      gap: 14px;
+      margin-bottom: 2rem;
+    }
+
+    .option-btn {
+      background: rgba(255, 255, 255, 0.02);
+      border: 2px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 1.2rem 1.5rem;
+      font-size: 16px;
+      color: var(--color-text-main);
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .option-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .option-btn:hover:not(.disabled)::before {
+      left: 100%;
+    }
+
+    .option-btn:hover:not(.disabled) {
+      background: rgba(127, 119, 221, 0.08);
+      border-color: var(--color-primary);
+      transform: translateX(8px);
+      box-shadow: 0 5px 20px rgba(127, 119, 221, 0.2);
+    }
+
+    .option-btn.selected {
+      background: rgba(127, 119, 221, 0.15);
+      border-color: var(--color-primary);
+      transform: scale(1.02);
+    }
+
+    .option-btn.correct {
+      background: rgba(34, 197, 94, 0.15);
+      border-color: var(--color-success);
+      animation: correctPulse 0.5s ease;
+    }
+
+    @keyframes correctPulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.03); }
+      100% { transform: scale(1); }
+    }
+
+    .option-btn.wrong {
+      background: rgba(239, 68, 68, 0.15);
+      border-color: var(--color-error);
+      animation: wrongShake 0.5s ease;
+    }
+
+    @keyframes wrongShake {
+      0%, 100% { transform: translateX(0); }
+      20% { transform: translateX(-10px); }
+      40% { transform: translateX(10px); }
+      60% { transform: translateX(-10px); }
+      80% { transform: translateX(10px); }
+    }
+
+    .option-btn.disabled {
+      cursor: not-allowed;
+      opacity: 0.7;
+    }
+
+    .opt-label {
+      min-width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 14px;
+      transition: all 0.3s ease;
+    }
+
+    .option-btn:hover:not(.disabled) .opt-label {
+      background: var(--color-primary);
+      color: white;
+    }
+
+    .option-btn.selected .opt-label {
+      background: var(--color-primary);
+      color: white;
+      box-shadow: 0 0 15px rgba(127, 119, 221, 0.5);
+    }
+
+    .option-btn.correct .opt-label {
+      background: var(--color-success);
+      color: white;
+      box-shadow: 0 0 15px rgba(34, 197, 94, 0.5);
+    }
+
+    .option-btn.wrong .opt-label {
+      background: var(--color-error);
+      color: white;
+      box-shadow: 0 0 15px rgba(239, 68, 68, 0.5);
+    }
+
+    .opt-text {
+      flex: 1;
+    }
+
+    /* Feedback Box */
+    .feedback-box {
+      display: none;
+      padding: 1.2rem 1.5rem;
+      border-radius: 14px;
+      margin-bottom: 1.5rem;
+      font-size: 15px;
+      line-height: 1.6;
+      animation: fadeInUp 0.4s ease;
+    }
+
+    .feedback-box.correct {
+      background: rgba(34, 197, 94, 0.1);
+      border: 1px solid rgba(34, 197, 94, 0.3);
+      color: var(--color-success);
+    }
+
+    .feedback-box.wrong {
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      color: var(--color-error);
+    }
+
+    .feedback-icon {
+      font-size: 18px;
+      margin-right: 8px;
+    }
+
+    /* Navigation Row */
+    .nav-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    /* Result Screen */
+    .result-screen {
+      display: none;
+      text-align: center;
+      animation: scaleIn 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes scaleIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .result-header {
+      margin-bottom: 2rem;
+    }
+
+    .result-icon {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 1.5rem;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 40px;
+      animation: bounceIn 0.6s ease;
+    }
+
+    @keyframes bounceIn {
+      0% { transform: scale(0); }
+      50% { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
+
+    .result-icon.pass {
+      background: linear-gradient(135deg, rgba(34, 197, 94, 0.2), rgba(22, 163, 74, 0.3));
+      box-shadow: 0 0 40px rgba(34, 197, 94, 0.3);
+    }
+
+    .result-icon.fail {
+      background: linear-gradient(135deg, rgba(239, 68, 68, 0.2), rgba(220, 38, 38, 0.3));
+      box-shadow: 0 0 40px rgba(239, 68, 68, 0.3);
+    }
+
+    .result-title {
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .result-sub {
+      font-size: 16px;
+      color: var(--color-text-mute);
+    }
+
+    /* Score Graph */
+    .score-graph-container {
+      margin: 2rem 0;
+      padding: 2rem;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+    }
+
+    .score-graph {
+      width: 200px;
+      height: 200px;
+      margin: 0 auto 1.5rem;
+      position: relative;
+    }
+
+    .score-svg {
+      width: 100%;
+      height: 100%;
+      transform: rotate(-90deg);
+    }
+
+    .score-bg {
+      fill: none;
+      stroke: rgba(255, 255, 255, 0.05);
+      stroke-width: 12;
+    }
+
+    .score-progress {
+      fill: none;
+      stroke: url(#scoreGradient);
+      stroke-width: 12;
+      stroke-linecap: round;
+      stroke-dasharray: 565;
+      stroke-dashoffset: 565;
+      transition: stroke-dashoffset 2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .score-center {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+    }
+
+    .score-value {
+      font-size: 56px;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .score-total {
+      font-size: 18px;
+      color: var(--color-text-mute);
+    }
+
+    /* Stats Grid */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-bottom: 2rem;
+    }
+
+    .stat-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 1.5rem 1rem;
+      border-radius: 16px;
+      transition: all 0.3s ease;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--color-primary);
+      box-shadow: 0 10px 30px rgba(127, 119, 221, 0.2);
+    }
+
+    .stat-card.correct {
+      border-color: rgba(34, 197, 94, 0.3);
+    }
+
+    .stat-card.correct:hover {
+      border-color: var(--color-success);
+      box-shadow: 0 10px 30px rgba(34, 197, 94, 0.2);
+    }
+
+    .stat-card.wrong {
+      border-color: rgba(239, 68, 68, 0.3);
+    }
+
+    .stat-card.wrong:hover {
+      border-color: var(--color-error);
+      box-shadow: 0 10px 30px rgba(239, 68, 68, 0.2);
+    }
+
+    .stat-card.skipped {
+      border-color: rgba(245, 158, 11, 0.3);
+    }
+
+    .stat-card.skipped:hover {
+      border-color: var(--color-warning);
+      box-shadow: 0 10px 30px rgba(245, 158, 11, 0.2);
+    }
+
+    .stat-value {
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-card.correct .stat-value { color: var(--color-success); }
+    .stat-card.wrong .stat-value { color: var(--color-error); }
+    .stat-card.skipped .stat-value { color: var(--color-warning); }
+
+    .stat-label {
+      font-size: 14px;
+      color: var(--color-text-mute);
+    }
+
+    /* Bar Chart */
+    .bar-chart {
+      margin-top: 2rem;
+      padding: 1.5rem;
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: 16px;
+    }
+
+    .bar-chart-title {
+      font-size: 14px;
+      color: var(--color-text-mute);
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .bar-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .bar-label {
+      width: 80px;
+      font-size: 13px;
+      color: var(--color-text-mute);
+    }
+
+    .bar-track {
+      flex: 1;
+      height: 24px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .bar-fill {
+      height: 100%;
+      border-radius: 12px;
+      transition: width 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding-right: 10px;
+      font-size: 12px;
+      font-weight: 600;
+      color: white;
+    }
+
+    .bar-fill.correct {
+      background: linear-gradient(90deg, var(--color-success), var(--color-success-dark));
+    }
+
+    .bar-fill.wrong {
+      background: linear-gradient(90deg, var(--color-error), var(--color-error-dark));
+    }
+
+    .bar-fill.skipped {
+      background: linear-gradient(90deg, var(--color-warning), #D97706);
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      #exam-wrapper {
+        padding: 1.5rem;
+        margin: 10px;
+      }
+
+      .intro-title {
+        font-size: 28px;
+      }
+
+      .q-text {
+        font-size: 18px;
+      }
+
+      .info-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+
+      .score-graph {
+        width: 160px;
+        height: 160px;
+      }
+
+      .score-value {
+        font-size: 44px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Animated Particles Background -->
+  <div class="particles" id="particles"></div>
+  
+  <!-- Background Glows -->
+  <div class="bg-glow glow-1"></div>
+  <div class="bg-glow glow-2"></div>
+
+  <div id="exam-wrapper">
+    <!-- Timer Overlay -->
+    <div id="timerOverlay">
+      <div class="timer-circle">
+        <svg class="timer-svg" viewBox="0 0 160 160">
+          <circle class="timer-bg" cx="80" cy="80" r="70"></circle>
+          <circle class="timer-progress" id="timerProgress" cx="80" cy="80" r="70"></circle>
+        </svg>
+        <div class="timer-text" id="timerText">10</div>
+      </div>
+      <p class="timer-label">Next question in</p>
+      <p class="timer-status" id="timerStatus">Get Ready!</p>
+    </div>
+
+    <!-- Intro Screen -->
+    <div class="intro-screen" id="introScreen">
+      <div class="logo-circle"><span class="logo-text">n8n</span></div>
+      <h1 class="intro-title">n8n Certification Exam</h1>
+      <p class="intro-sub">Test your knowledge of n8n workflow automation.<br>20 questions · 100 marks · Timed questions</p>
+      <div class="info-grid">
+        <div class="info-chip"><strong>20</strong> Questions</div>
+        <div class="info-chip"><strong>5 pts</strong> Per Question</div>
+        <div class="info-chip"><strong>70+</strong> To Pass</div>
+        <div class="info-chip"><strong>10s</strong> Per Question</div>
+      </div>
+      <button class="btn-primary" onclick="startExam()">🚀 Start Exam</button>
+    </div>
+
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+      <div class="loader-container">
+        <div class="loader-ring"></div>
+        <div class="loader-ring"></div>
+        <div class="loader-ring"></div>
+        <div class="loader-center"></div>
+      </div>
+      <p class="loading-text" id="loadingText">Preparing your exam</p>
+      <p class="loading-sub">
+        <span class="loading-dots">
+          <span></span>
+          <span></span>
+          <span></span>
+        </span>
+      </p>
+    </div>
+
+    <!-- Question Screen -->
+    <div class="question-screen" id="questionScreen">
+      <div class="progress-container">
+        <div class="progress-bar-wrap">
+          <div class="progress-bar-fill" id="progressBar" style="width: 0%"></div>
+        </div>
+        <div class="progress-text">
+          <span id="progressText">Question 1 of 20</span>
+          <span id="progressPercent">0%</span>
+        </div>
+      </div>
+
+      <div class="q-header">
+        <span class="q-counter" id="qCounter">
+          <span class="q-counter-icon">📝</span>
+          Question 1
+        </span>
+        <span class="q-marks">⭐ 5 marks</span>
+      </div>
+
+      <div class="category-badge" id="qCategory">
+        <span class="category-dot"></span>
+        <span>Basics</span>
+      </div>
+
+      <p class="q-text" id="qText"></p>
+
+      <div class="options-grid" id="optionsGrid"></div>
+
+      <div class="feedback-box" id="feedbackBox">
+        <span class="feedback-icon"></span>
+        <span class="feedback-text"></span>
+      </div>
+
+      <div class="nav-row">
+        <button class="btn-secondary" id="skipBtn" onclick="skipQuestion()">⏭️ Skip</button>
+        <button class="btn-next" id="nextBtn" onclick="nextQuestion()" style="display: none;">Next Question →</button>
+      </div>
+    </div>
+
+    <!-- Result Screen -->
+    <div class="result-screen" id="resultScreen">
+      <div class="result-header">
+        <div class="result-icon" id="resultIcon">🎉</div>
+        <h2 class="result-title" id="resultTitle">Congratulations!</h2>
+        <p class="result-sub" id="resultSub">You've completed the exam</p>
+      </div>
+
+      <div class="score-graph-container">
+        <div class="score-graph">
+          <svg class="score-svg" viewBox="0 0 200 200">
+            <defs>
+              <linearGradient id="scoreGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" style="stop-color: var(--color-primary);" />
+                <stop offset="100%" style="stop-color: var(--color-secondary);" />
+              </linearGradient>
+            </defs>
+            <circle class="score-bg" cx="100" cy="100" r="90"></circle>
+            <circle class="score-progress" id="scoreProgress" cx="100" cy="100" r="90"></circle>
+          </svg>
+          <div class="score-center">
+            <div class="score-value" id="scoreValue">0</div>
+            <div class="score-total">/ 100</div>
+          </div>
+        </div>
+
+        <div class="bar-chart">
+          <div class="bar-chart-title">Performance Breakdown</div>
+          <div class="bar-item">
+            <span class="bar-label">Correct</span>
+            <div class="bar-track">
+              <div class="bar-fill correct" id="correctBar" style="width: 0%"></div>
+            </div>
+          </div>
+          <div class="bar-item">
+            <span class="bar-label">Wrong</span>
+            <div class="bar-track">
+              <div class="bar-fill wrong" id="wrongBar" style="width: 0%"></div>
+            </div>
+          </div>
+          <div class="bar-item">
+            <span class="bar-label">Skipped</span>
+            <div class="bar-track">
+              <div class="bar-fill skipped" id="skippedBar" style="width: 0%"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card correct">
+          <div class="stat-value" id="correctCount">0</div>
+          <div class="stat-label">Correct</div>
+        </div>
+        <div class="stat-card wrong">
+          <div class="stat-value" id="wrongCount">0</div>
+          <div class="stat-label">Wrong</div>
+        </div>
+        <div class="stat-card skipped">
+          <div class="stat-value" id="skippedCount">0</div>
+          <div class="stat-label">Skipped</div>
+        </div>
+      </div>
+
+      <button class="btn-primary" onclick="restartExam()">🔄 Retake Exam</button>
+    </div>
+  </div>
+
+  <script>
+    // Create animated particles
+    function createParticles() {
+      const container = document.getElementById('particles');
+      for (let i = 0; i < 30; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.animationDelay = Math.random() * 15 + 's';
+        particle.style.animationDuration = (15 + Math.random() * 10) + 's';
+        container.appendChild(particle);
+      }
+    }
+    createParticles();
+
+    const questions = [
+      { q: "What is n8n primarily used for?", category: "Basics", opts: ["Database management", "Workflow automation and integration", "Frontend development", "Cloud hosting"], ans: 1, exp: "n8n is an open-source workflow automation tool that connects apps and services." },
+      { q: "Which execution model does n8n use to pass data between nodes?", category: "Core Concepts", opts: ["GraphQL queries", "Items-based data passing", "Direct API calls only", "CSV file transfers"], ans: 1, exp: "n8n passes data between nodes as an array of items, each being a JSON object." },
+      { q: "What is the name of n8n's self-hosted installation method using Docker?", category: "Installation", opts: ["n8n cloud", "docker-compose up", "npm install -g n8n", "n8n deploy"], ans: 2, exp: "Running 'npm install -g n8n' or docker are the main self-hosted methods. Docker Compose is commonly used for production." },
+      { q: "Which node type is used to trigger a workflow via HTTP request?", category: "Nodes", opts: ["Cron node", "Webhook node", "Function node", "HTTP Request node"], ans: 1, exp: "The Webhook node listens for incoming HTTP requests to trigger a workflow." },
+      { q: "What does the 'IF' node do in n8n?", category: "Core Concepts", opts: ["Makes an API call", "Loops through items", "Routes data based on conditions", "Sends emails"], ans: 2, exp: "The IF node splits the workflow into two paths based on true/false conditions." },
+      { q: "Which language is used inside the 'Code' node in n8n?", category: "Code", opts: ["Python", "JavaScript (Node.js)", "PHP", "Ruby"], ans: 1, exp: "n8n's Code node uses JavaScript (Node.js) for custom logic and data transformation." },
+      { q: "What is a 'credential' in n8n?", category: "Security", opts: ["A workflow license key", "Stored authentication info for external services", "A node configuration template", "A user account password"], ans: 1, exp: "Credentials store authentication data (API keys, OAuth tokens) securely for use in nodes." },
+      { q: "How does the 'Merge' node combine two data streams by default?", category: "Nodes", opts: ["Append all items together", "Only keep matching items", "Replace stream 1 with stream 2", "Create a nested object"], ans: 0, exp: "By default, Merge (Append mode) combines items from both inputs into one array." },
+      { q: "What is n8n's community node registry?", category: "Ecosystem", opts: ["npm packages prefixed with 'n8n-nodes-'", "The n8n GUI marketplace", "A GitHub repository only", "Docker Hub images"], ans: 0, exp: "Community nodes are npm packages following the 'n8n-nodes-*' naming convention." },
+      { q: "Which built-in node schedules workflow execution at specific times?", category: "Nodes", opts: ["Timer node", "Schedule Trigger node", "Interval node", "Cron node"], ans: 1, exp: "The Schedule Trigger node (formerly Cron) runs workflows at defined times or intervals." },
+      { q: "What does 'Execute Workflow' node allow you to do?", category: "Advanced", opts: ["Run shell commands", "Call another n8n workflow", "Execute SQL queries", "Deploy to cloud"], ans: 1, exp: "The Execute Workflow node calls a sub-workflow, enabling modular workflow design." },
+      { q: "In n8n expressions, which syntax is used to access data from a previous node?", category: "Expressions", opts: ["{{$node.NodeName.data}}", "{{$node['NodeName'].json}}", "{{node.get('NodeName')}}", "{{prev.NodeName.output}}"], ans: 1, exp: "Use {{$node['NodeName'].json.fieldName}} to access JSON data from a previous node." },
+      { q: "What happens when a node throws an error and 'Stop and Error' is not set?", category: "Error Handling", opts: ["Workflow stops silently", "Workflow continues to next node", "The error is logged and execution stops", "An email is sent automatically"], ans: 2, exp: "By default, an unhandled node error stops execution and logs the error in the executions list." },
+      { q: "Which n8n feature allows you to run separate logic for each item individually?", category: "Advanced", opts: ["Split In Batches node", "Loop Over Items (SplitInBatches)", "Item Lists node", "ForEach node"], ans: 0, exp: "Split In Batches node processes items in configurable batch sizes, useful for loops." },
+      { q: "What is the purpose of the 'Set' node in n8n?", category: "Nodes", opts: ["Connect to databases", "Add, remove, or modify fields in items", "Send HTTP requests", "Trigger on schedule"], ans: 1, exp: "The Set node lets you define, rename, or delete fields in the item data passing through." },
+      { q: "How are workflow variables stored between executions in n8n?", category: "Advanced", opts: ["Automatically in RAM", "Using the Static Data feature or external database", "In browser localStorage", "In a .env file"], ans: 1, exp: "n8n offers Static Data (per-workflow persistent data) or you can use an external DB node." },
+      { q: "Which HTTP method is most appropriate for creating a new resource via the HTTP Request node?", category: "API", opts: ["GET", "DELETE", "POST", "PATCH"], ans: 2, exp: "POST is the standard HTTP method for creating new resources in REST APIs." },
+      { q: "What does the 'Wait' node do in an n8n workflow?", category: "Nodes", opts: ["Pauses execution until a condition is met or a time passes", "Waits for user input in the UI", "Holds data in a queue", "Delays email sending only"], ans: 0, exp: "The Wait node pauses execution for a set duration or until a webhook resumes it." },
+      { q: "In n8n, what is an 'execution' referring to?", category: "Core Concepts", opts: ["A node configuration save", "A single run of a workflow from trigger to end", "A user login session", "A credential test"], ans: 1, exp: "An execution is one complete run of a workflow, recorded in the Executions panel." },
+      { q: "Which of the following best describes n8n's fair-code license?", category: "Licensing", opts: ["Fully open-source MIT license", "Proprietary commercial only", "Source-available with restrictions on commercial use", "Creative Commons license"], ans: 2, exp: "n8n uses a fair-code model: source is visible and free for personal use, but commercial hosting requires a license." }
+    ];
+
+    let current = 0, score = 0, correct = 0, wrong = 0, skipped = 0;
+    let answered = false;
+    let timerInterval = null;
+
+    function startExam() {
+      document.getElementById('introScreen').style.display = 'none';
+      const loadingScreen = document.getElementById('loadingScreen');
+      loadingScreen.style.display = 'flex';
+
+      const messages = [
+        "Preparing questions...",
+        "Loading node concepts...",
+        "Setting up exam paper...",
+        "Initializing timer...",
+        "Almost ready..."
+      ];
+
+      let i = 0;
+      const loadingText = document.getElementById('loadingText');
+      
+      const interval = setInterval(() => {
+        loadingText.textContent = messages[i % messages.length];
+        i++;
+        if (i > messages.length) {
+          clearInterval(interval);
+          loadingScreen.style.display = 'none';
+          document.getElementById('questionScreen').style.display = 'block';
+          showQuestion();
+        }
+      }, 500);
+    }
+
+    function showQuestion() {
+      answered = false;
+      const q = questions[current];
+      
+      // Update progress
+      const progress = ((current) / questions.length) * 100;
+      document.getElementById('progressBar').style.width = progress + '%';
+      document.getElementById('progressText').textContent = `Question ${current + 1} of ${questions.length}`;
+      document.getElementById('progressPercent').textContent = Math.round(progress) + '%';
+      
+      // Update question info
+      document.getElementById('qCounter').innerHTML = `<span class="q-counter-icon">📝</span> Question ${current + 1}`;
+      document.getElementById('qText').textContent = q.q;
+      document.getElementById('qCategory').innerHTML = `<span class="category-dot"></span><span>${q.category}</span>`;
+      
+      // Hide feedback and next button
+      document.getElementById('feedbackBox').style.display = 'none';
+      document.getElementById('nextBtn').style.display = 'none';
+      document.getElementById('skipBtn').style.display = 'inline-block';
+
+      // Create options
+      const labels = ['A', 'B', 'C', 'D'];
+      const grid = document.getElementById('optionsGrid');
+      grid.innerHTML = '';
+      
+      q.opts.forEach((opt, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'option-btn';
+        btn.innerHTML = `<span class="opt-label">${labels[i]}</span><span class="opt-text">${opt}</span>`;
+        btn.onclick = () => selectAnswer(i);
+        btn.style.animationDelay = (i * 0.1) + 's';
+        grid.appendChild(btn);
+      });
+
+      // Animate question screen
+      const qs = document.getElementById('questionScreen');
+      qs.style.animation = 'none';
+      void qs.offsetWidth;
+      qs.style.animation = 'slideIn 0.5s cubic-bezier(0.16, 1, 0.3, 1)';
+    }
+
+    function selectAnswer(idx) {
+      if (answered) return;
+      answered = true;
+      
+      const q = questions[current];
+      const btns = document.querySelectorAll('.option-btn');
+      btns.forEach(b => b.classList.add('disabled'));
+
+      const fb = document.getElementById('feedbackBox');
+      
+      if (idx === q.ans) {
+        btns[idx].classList.add('correct');
+        score += 5;
+        correct++;
+        fb.className = 'feedback-box correct';
+        fb.innerHTML = `<span class="feedback-icon">✅</span><span class="feedback-text">Correct! ${q.exp}</span>`;
+      } else {
+        btns[idx].classList.add('wrong');
+        btns[q.ans].classList.add('correct');
+        wrong++;
+        fb.className = 'feedback-box wrong';
+        fb.innerHTML = `<span class="feedback-icon">❌</span><span class="feedback-text">Incorrect. ${q.exp}</span>`;
+      }
+      
+      fb.style.display = 'block';
+      document.getElementById('skipBtn').style.display = 'none';
+      document.getElementById('nextBtn').style.display = 'inline-block';
+    }
+
+    function skipQuestion() {
+      skipped++;
+      goToNextQuestion();
+    }
+
+    function nextQuestion() {
+      goToNextQuestion();
+    }
+
+    function goToNextQuestion() {
+      current++;
+      if (current >= questions.length) {
+        showResult();
+      } else {
+        // Show timer overlay
+        showTimerOverlay();
+      }
+    }
+
+    function showTimerOverlay() {
+      const overlay = document.getElementById('timerOverlay');
+      const timerText = document.getElementById('timerText');
+      const timerProgress = document.getElementById('timerProgress');
+      const timerStatus = document.getElementById('timerStatus');
+      
+      overlay.style.display = 'flex';
+      overlay.className = '';
+      
+      let timeLeft = 10;
+      const circumference = 2 * Math.PI * 70; // radius = 70
+      timerProgress.style.strokeDasharray = circumference;
+      timerProgress.style.strokeDashoffset = 0;
+      timerProgress.className = 'timer-progress';
+      
+      timerText.textContent = timeLeft;
+      timerStatus.textContent = 'Get Ready!';
+      timerStatus.className = 'timer-status';
+      
+      // Start with green phase
+      overlay.classList.add('green-phase');
+      
+      timerInterval = setInterval(() => {
+        timeLeft--;
+        timerText.textContent = timeLeft;
+        
+        // Update progress circle
+        const offset = circumference * (1 - timeLeft / 10);
+        timerProgress.style.strokeDashoffset = offset;
+        
+        // Phase transitions
+        if (timeLeft <= 6 && timeLeft > 4) {
+          // Green phase (10-7 seconds) - already set
+          overlay.className = 'green-phase';
+          timerStatus.textContent = 'Get Ready!';
+          timerStatus.className = 'timer-status';
+          timerProgress.className = 'timer-progress';
+        } else if (timeLeft <= 4 && timeLeft > 0) {
+          // Red phase (4-1 seconds)
+          overlay.className = 'red-phase';
+          timerStatus.textContent = 'Almost there!';
+          timerStatus.className = 'timer-status danger';
+          timerProgress.className = 'timer-progress danger';
+        }
+        
+        if (timeLeft <= 0) {
+          clearInterval(timerInterval);
+          overlay.style.display = 'none';
+          showQuestion();
+        }
+      }, 1000);
+    }
+
+    function showResult() {
+      document.getElementById('questionScreen').style.display = 'none';
+      const rs = document.getElementById('resultScreen');
+      rs.style.display = 'block';
+
+      // Animate score
+      const scoreValue = document.getElementById('scoreValue');
+      const scoreProgress = document.getElementById('scoreProgress');
+      const circumference = 2 * Math.PI * 90;
+      
+      scoreProgress.style.strokeDasharray = circumference;
+      scoreProgress.style.strokeDashoffset = circumference;
+      
+      let currentScore = 0;
+      const scoreInterval = setInterval(() => {
+        currentScore++;
+        scoreValue.textContent = currentScore;
+        
+        const offset = circumference * (1 - currentScore / 100);
+        scoreProgress.style.strokeDashoffset = offset;
+        
+        if (currentScore >= score) {
+          clearInterval(scoreInterval);
+        }
+      }, 30);
+
+      // Update stats
+      document.getElementById('correctCount').textContent = correct;
+      document.getElementById('wrongCount').textContent = wrong;
+      document.getElementById('skippedCount').textContent = skipped;
+
+      // Animate bar chart
+      setTimeout(() => {
+        const total = questions.length;
+        document.getElementById('correctBar').style.width = (correct / total * 100) + '%';
+        document.getElementById('correctBar').textContent = correct;
+        document.getElementById('wrongBar').style.width = (wrong / total * 100) + '%';
+        document.getElementById('wrongBar').textContent = wrong;
+        document.getElementById('skippedBar').style.width = (skipped / total * 100) + '%';
+        document.getElementById('skippedBar').textContent = skipped;
+      }, 500);
+
+      // Set result message
+      const resultIcon = document.getElementById('resultIcon');
+      const resultTitle = document.getElementById('resultTitle');
+      const resultSub = document.getElementById('resultSub');
+
+      if (score >= 90) {
+        resultIcon.textContent = '🏆';
+        resultIcon.className = 'result-icon pass';
+        resultTitle.textContent = 'Outstanding!';
+        resultSub.textContent = 'You are an n8n expert. Certified with distinction!';
+      } else if (score >= 70) {
+        resultIcon.textContent = '🎉';
+        resultIcon.className = 'result-icon pass';
+        resultTitle.textContent = 'Passed!';
+        resultSub.textContent = 'Great work! You have cleared the certification exam.';
+      } else if (score >= 50) {
+        resultIcon.textContent = '💪';
+        resultIcon.className = 'result-icon fail';
+        resultTitle.textContent = 'Almost there!';
+        resultSub.textContent = "You're close. Review weak areas and try again.";
+      } else {
+        resultIcon.textContent = '📚';
+        resultIcon.className = 'result-icon fail';
+        resultTitle.textContent = 'Keep practising!';
+        resultSub.textContent = 'Revisit the n8n docs and retake the exam when ready.';
+      }
+    }
+
+    function restartExam() {
+      current = 0;
+      score = 0;
+      correct = 0;
+      wrong = 0;
+      skipped = 0;
+      
+      document.getElementById('resultScreen').style.display = 'none';
+      document.getElementById('introScreen').style.display = 'flex';
+      
+      // Reset progress bar
+      document.getElementById('progressBar').style.width = '0%';
+      
+      // Reset score graph
+      const scoreProgress = document.getElementById('scoreProgress');
+      const circumference = 2 * Math.PI * 90;
+      scoreProgress.style.strokeDashoffset = circumference;
+      
+      // Reset bar chart
+      document.getElementById('correctBar').style.width = '0%';
+      document.getElementById('wrongBar').style.width = '0%';
+      document.getElementById('skippedBar').style.width = '0%';
+    }
+  </script>
+</body>
+</html>
